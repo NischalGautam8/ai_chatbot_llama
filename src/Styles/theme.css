@@ -1,0 +1,22 @@
+body.light{
+    background-color: #ffffff;
+    color:black;
+}
+body.dark{
+    background-color: #242424;
+    color:white;
+}
+.theme-toggle{ 
+    /* light mode */
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px;
+}
+body.dark .theme-toggle{
+    background-color: #1f1f1f;
+    color:white;
+}
