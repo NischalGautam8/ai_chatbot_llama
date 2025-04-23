@@ -4,13 +4,11 @@ import { PlusIcon, SendHorizontal, Mic } from 'lucide-react'
 import user_icon from "../assets/user_icon.png";
 import gemini_icon from "../assets/gemini_icon.png";
 import {useGemini} from '../Context/GeminiContext';
-import { useState } from 'react';
+// import { useState } from 'react';
 function MainSection() {
-  const {input,setInput,loading,resultData,onSent,showResult,recentPrompt,onImageSent}=useGemini()
-  const [file,setFile] =useState<File | null>();
-  console.log(file)
+  const {input,setInput,loading,resultData,onSent,showResult,recentPrompt,systemPrompt}=useGemini()
+  // const [file,setFile] =useState<File | null>();
   const { theme } = useTheme()
-  console.log(loading)
   return (
     <div className={cn(
       'flex transition-all duration-300 ease-in-out flex-col items-center justify-center min-h-[80vh] gap-8',
@@ -82,7 +80,6 @@ function MainSection() {
     setFile(selectedFile);
   }} 
 /> */}
-
           <PlusIcon  className="w-6 h-6" /> 
         </button>
 
@@ -90,7 +87,7 @@ function MainSection() {
         <input 
         onKeyDown={(e)=>{ 
           if(e.key==='Enter'){
-            onSent(input)
+            onSent(systemPrompt,input)
           }
         }}
         onChange={(e)=>setInput(e.target.value)}
@@ -115,7 +112,7 @@ function MainSection() {
           )}>
             <Mic className="w-6 h-6" />
           </button>
-          <button  onClick={()=>onSent(input)} className={cn(
+          <button  onClick={()=>onSent(systemPrompt,input)} className={cn(
             "p-2 rounded-full transition-all",
             theme === 'dark' 
               ? 'bg-blue-600 hover:bg-blue-700 text-white' 
@@ -128,5 +125,4 @@ function MainSection() {
     </div>
   )
 }
-
 export default MainSection

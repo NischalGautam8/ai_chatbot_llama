@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import {runChat,generateImageCaption, imageResponse} from "../config/gemini";
+import {runChat, imageResponse} from "../config/gemini";
 
 interface GeminiContextType {
     input: string;
@@ -13,9 +13,11 @@ interface GeminiContextType {
     loading: boolean;
     setLoading: (loading: boolean) => void;
     resultData: string;
-    onSent: (prompt: string) => Promise<void>;
+    onSent: (systemPrompt:string,prompt: string) => Promise<void>;
     onImageSent: (file:File) => Promise<void>;
     newChat: () => void;
+    systemPrompt:string;
+    setSystemPrompt:(systemPrompt:string)=>void;
 }
 // eslint-disable-next-line react-refresh/only-export-components
 export const GeminiContext = createContext<GeminiContextType | undefined>(undefined);
@@ -29,12 +31,13 @@ export const useGemini = () => {
 };
             
 export const GeminiProvider = ({ children }: { children: React.ReactNode }) => {
-    const [input, setInput] = useState<string>("");
+    const [input, setInput] = useState<string>("Who are you?");
     const [recentPrompt, setRecentPrompt] = useState<string>("");
     const [previousPrompts, setPreviousprompts] = useState<string[]>([]);
     const [showResult, setShowResult] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [resultData, setResultData] = useState<string>("");
+    const [systemPrompt,setSystemPrompt]=useState<string>("");
 const delayPara = (index:number,nextWord:string)=>{
     //delays the addition of the next word 
     setTimeout(()=>{
@@ -48,7 +51,7 @@ const newChat = ()=>{
 const onImageSent = async (file:File)=>{
     await imageResponse(file);
 }
-    const onSent = async (prompt: string) => {
+    const onSent = async (systemPrompt:string,prompt: string) => {
         try {
             setResultData("");
             setLoading(true);
@@ -56,7 +59,7 @@ const onImageSent = async (file:File)=>{
             setPreviousprompts(prev => [...prev, prompt]);
             setInput("");
             setShowResult(true);
-            const response = await runChat(prompt);
+            const response = await runChat(systemPrompt,prompt);
             const responseArray = response?.split("**") || []
             let processedResponse:string="" ;
             for (let i=0;i<responseArray?.length;i++){
@@ -100,6 +103,8 @@ const onImageSent = async (file:File)=>{
         onSent,
         newChat,
         onImageSent,
+        systemPrompt,
+        setSystemPrompt
 
     };
 

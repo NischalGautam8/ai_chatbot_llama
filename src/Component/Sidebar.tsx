@@ -19,7 +19,7 @@ function Sidebar({
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
     const { theme } = useTheme();
-    const {newChat,previousPrompts,onSent,setInput} = useGemini()
+    const {newChat,previousPrompts,onSent,setInput,systemPrompt} = useGemini()
     return (
         <div className={cn(
             "transition-all duration-300 ease-in-out h-screen px-2",
@@ -59,9 +59,13 @@ function Sidebar({
                         </p>
                         <div className="space-y-1">
                             {previousPrompts.map((item,index) => (
-                                <div onClick={()=>{setInput(item);
-                                onSent(item);
-                                }}
+                                <div 
+                                    onClick={() => {
+                                        // setInput(item);
+                                        onSent(systemPrompt,item)
+                                        // Don't call onSent here to prevent adding duplicate to recent prompts
+                                        // Just set the input and let the user send it manually if they want
+                                    }}
                                     key={index}
                                     className="text-gray-600 py-1"
                                 >

@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@google/genai": "^0.9.0",
+    "@google/generative-ai": "^0.24.0",
     "@tailwindcss/vite": "^4.1.4",
     "clsx": "^2.1.1",
     "lucide-react": "^0.489.0",
+    "openai": "^4.95.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.2.0",
