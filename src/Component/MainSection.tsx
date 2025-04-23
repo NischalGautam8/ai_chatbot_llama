@@ -15,11 +15,9 @@ function MainSection() {
       theme === 'dark' ? 'text-white' : 'text-black'
     )}>
       {!showResult ? <div className='text-center'>
-        <h1 className='text-4xl font-bold'>
-          Meet Your Personal AI Assistant,{' '}
-          <span className='bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent'>
-            Kernel
-          </span>
+        <h1 className='text-4xl font-bold bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent'>
+        What can I help with?
+        ?
         </h1>
       </div>:<div className='overflow-y-auto px-10 md:px-20  w-2/3 '>
         <div>

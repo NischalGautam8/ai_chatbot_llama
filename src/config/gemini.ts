@@ -1,15 +1,33 @@
 import OpenAI from "openai";
-// import ai from '@google/generative-ai';
-// Initialize OpenAI SDK with Ollama's endpoint
+
+// Configuration flag to switch between API and mock responses
+const USE_MOCK_RESPONSES = false; // Set to true to use mock responses
+
+// Mock responses for testing
+const MOCK_RESPONSES = [
+  "This is a mock response that simulates an AI assistant. I can help you with various tasks and answer questions.",
+  "Here's another mock response. I'm demonstrating different possible responses that could be returned.",
+  "Let me explain that in detail... This is a simulated response showing how longer explanations would look.",
+  "That's an interesting question! Here's a mock response that shows how I would handle such queries.",
+  "I understand what you're asking. Here's a mock response that demonstrates my typical interaction style."
+];
+
 const openai = new OpenAI({
-  baseURL: "http://localhost:11434/v1", // Ollama's local API endpoint
-  apiKey: "ollama", // Ollama doesn't require an API key, but OpenAI SDK expects one (can be any string)
+  baseURL: "http://localhost:11434/v1",
+  apiKey: "ollama",
   dangerouslyAllowBrowser: true
 });
 
+async function getMockResponse(): Promise<string> {
+  // Randomly select a response from the mock responses
+  const randomIndex = Math.floor(Math.random() * MOCK_RESPONSES.length);
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return MOCK_RESPONSES[randomIndex];
+}
+
 async function runChat(systemPrompt: string, userPrompt: string) {
   try {
-    // Provide default system prompt if empty
     const finalSystemPrompt = systemPrompt.trim() || "You're a helpful assistant";
     const finalUserPrompt = userPrompt.trim();
 
@@ -17,63 +35,48 @@ async function runChat(systemPrompt: string, userPrompt: string) {
       throw new Error("User prompt cannot be empty");
     }
 
-    // Call the chat completions endpoint
+    if (USE_MOCK_RESPONSES) {
+      return await getMockResponse();
+    }
+
+    // Real API call
     const completion = await openai.chat.completions.create({
-      model: "llama3.2", // Replace with your Ollama model (e.g., mistral, phi3)
+      model: "llama3.2",
       messages: [
         { role: "system", content: finalSystemPrompt },
         { role: "user", content: finalUserPrompt },
       ],
     });
-    // Extract the response
+    
     const responseText = completion.choices[0].message.content;
     console.log(responseText);
     return responseText;
   } catch (error) {
+    if (USE_MOCK_RESPONSES) {
+      // If using mock responses, don't throw error, return a mock error response
+      return "I apologize, but I encountered an error processing your request. Could you please try again?";
+    }
     console.error("Error in runChat:", error);
     throw error;
   }
 }
-// async function fileToBase64(file: File): Promise<string> {
-//     return new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-//       reader.onloadend = () => resolve(reader.result as string);
-//       reader.onerror = reject;
-//       reader.readAsDataURL(file);
-//     });
-//   }
-  async function imageResponse(file: File) {
+
+async function imageResponse(file: File) {
   try {
     if (!file) {
       throw new Error('No file provided');
     }
 
-    // const base64Data = await fileToBase64(file);
-    
-    // const response = await ai.models.generateContent({
-    //   model: "gemini-2.0-flash",
-    //   contents: [
-    //     {
-    //       parts: [
-    //         {
-    //           inlineData: {
-    //             mimeType: file.type,
-    //             data: base64Data.split(',')[1] // Remove the data URL prefix
-    //           }
-    //         },
-    //         { text: "Caption this image." }
-    //       ]
-    //     }
-    //   ]
-    // });
+    if (USE_MOCK_RESPONSES) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return "This appears to be an image of [mock image description]. I can see [mock details] in it.";
+    }
 
     return "NOT SET UP";
-    //@ts-expect-error
-  } catch (error: any) {
+  } catch (error:any) {
     console.error("Error processing image:", error);
     return `Error: ${error.message}`;
   }
 }
 
-
-export {runChat,imageResponse};
+export { runChat, imageResponse };

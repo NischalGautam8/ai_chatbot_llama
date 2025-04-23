@@ -1,54 +1,84 @@
-# React + TypeScript + Vite
+# AI Chat Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based chat application that uses Ollama's API to interact with LLM models. The application supports multiple personas, custom agents, and includes a mock response system for testing.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Ollama Installation**
+   - Download and install Ollama from [https://ollama.ai/](https://ollama.ai/)
+   - Follow the installation instructions for your operating system
 
-## Expanding the ESLint configuration
+2. **LLM Model Setup**
+   - After installing Ollama, run the following command to download and set up the LLama model:
+   ```bash
+   ollama run llama3.2
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. **Clone the repository**
+   ```bash
+   git clone [repository-url]
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Running the Application
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+2. **Access the application**
+   - Open your browser and navigate to `http://localhost:5173`
+
+## Features
+
+### Chat Interface
+- Enter your prompt in the input field
+- Press Enter or click the send button to get a response
+- Responses are displayed in a conversation format
+
+### Personas
+- Choose from pre-defined personas including:
+  - Default (Helpful and professional)
+  - Ram (Funny and sarcastic)
+  - Shyam (Computer Science expert)
+  - Raj (Offensive)
+
+### Custom Agents
+1. Click the "Create New Agent" button
+2. Enter:
+   - Agent name
+   - Description
+   - System prompt
+3. Your custom agent will be saved locally
+
+### Mock Response System
+To enable mock responses (useful for testing without API):
+1. Open `src/config/gemini.ts`
+2. Set `USE_MOCK_RESPONSES = true`
+3. The application will now use predefined responses instead of calling the API
+
+## Tech Stack
+- React
+- TypeScript
+- Vite
+- TailwindCSS
+- OpenAI API (configured for Ollama)
+
+## Development
+
+### Available Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
+
+## License
+[Your License Here]
+

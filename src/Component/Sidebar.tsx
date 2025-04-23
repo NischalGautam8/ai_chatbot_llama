@@ -19,7 +19,7 @@ function Sidebar({
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
     const { theme } = useTheme();
-    const {newChat,previousPrompts,onSent,setInput,systemPrompt} = useGemini()
+    const {newChat,previousPrompts,onSent,systemPrompt} = useGemini()
     return (
         <div className={cn(
             "transition-all duration-300 ease-in-out h-screen px-2",
