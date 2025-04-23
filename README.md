@@ -79,6 +79,9 @@ To enable mock responses (useful for testing without API):
 - `npm run lint` - Run ESLint
 - `npm run preview` - Preview production build
 
-## License
-[Your License Here]
+## Screenshots
+![image](https://github.com/user-attachments/assets/e1c4d730-9a86-4761-8921-2df2604870cb)
+![image](https://github.com/user-attachments/assets/8ad2b50d-3228-4293-9b8f-391a90c98c2b)
+![image](https://github.com/user-attachments/assets/c10e45ef-afff-4a3f-8f81-4e7ee7cb0d4c)
+![image](https://github.com/user-attachments/assets/4246fd8c-9162-4318-8e2b-0047c45c3ec5)
 
