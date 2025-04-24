@@ -4,6 +4,7 @@ import { PlusIcon, SendHorizontal, Mic } from 'lucide-react'
 import user_icon from "../assets/user_icon.png";
 import gemini_icon from "../assets/gemini_icon.png";
 import {useGemini} from '../Context/GeminiContext';
+import "../App.css"
 // import { useState } from 'react';
 function MainSection() {
   const {input,setInput,loading,resultData,onSent,showResult,recentPrompt,systemPrompt}=useGemini()
@@ -17,9 +18,8 @@ function MainSection() {
       {!showResult ? <div className='text-center'>
         <h1 className='text-4xl font-bold bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent'>
         What can I help with?
-        ?
         </h1>
-      </div>:<div className='overflow-y-auto px-10 md:px-20  w-2/3 '>
+      </div>:<div className='overflow-y-auto scrollbar-hide px-10 md:px-20 w-2/3'>
         <div>
           {/* USER PROMPT */}
           <div className='flex gap-3 items-center'>
@@ -27,17 +27,41 @@ function MainSection() {
         <p>{recentPrompt}</p>
           </div>
           {/* RESULT DATA / skeleton */}
-          <div className='flex gap-3 my-6 items-start '>
-          <img className='w-8 h-8 rounded-full' src={gemini_icon} />
-        {loading?
-        // SKELETON
-        <div className='animate-pulse w-full flex flex-col items-center gap-3'>
-          <div className='w-full h-4 bg-gray-200 rounded-md'></div>
-          <div className='w-full h-4 bg-gray-200 rounded-md'></div>
-          <div className='w-full h-4 bg-gray-200 rounded-md'></div>
-        </div>:
-        // RESULT CONTENT 
-        <p className={cn('text-gray-600 overflow-x-hidden  text-lg items-start ',theme === 'dark' ? 'text-gray-300' : 'text-gray-700') }dangerouslySetInnerHTML={{__html:resultData}}></p>}
+          <div className='flex gap-3 my-6 items-start'>
+            {loading ? (
+              <div className="loading-container">
+                <div className="loading-circle"></div>
+                <img 
+                  className="w-6 h-6 loading-icon" 
+                  src={gemini_icon} 
+                  alt="Loading..."
+                />
+              </div>
+            ) : (
+              <img 
+                className='w-8 h-8 rounded-full' 
+                src={gemini_icon} 
+                alt="Gemini"
+              />
+            )}
+            
+            {loading ? (
+              // SKELETON
+              <div className='animate-pulse w-full flex flex-col items-center gap-3'>
+                <div className='w-full h-4 bg-gray-200 rounded-md'></div>
+                <div className='w-full h-4 bg-gray-200 rounded-md'></div>
+                <div className='w-full h-4 bg-gray-200 rounded-md'></div>
+              </div>
+            ) : (
+              // RESULT CONTENT 
+              <p 
+                className={cn(
+                  'text-gray-600 overflow-x-hidden scrollbar-hide text-lg items-start',
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                )}
+                dangerouslySetInnerHTML={{__html:resultData}}
+              ></p>
+            )}
           </div>
           </div></div>}
       {/* INPUT SECTION */}

@@ -1,4 +1,4 @@
-# AI Chat Application
+# AI Chat Application INDUCTIVE take home assignment
 
 A React-based chat application that uses Ollama's API to interact with LLM models. The application supports multiple personas, custom agents, and includes a mock response system for testing.
 
