@@ -1,6 +1,7 @@
 # AI Chat Application INDUCTIVE take home assignment
 
 A React-based chat application that uses Ollama's API to interact with LLM models. The application supports multiple personas, custom agents, and includes a mock response system for testing.
+Link (without custom agenst only chatting with llm : https://www.ai-chatbot-topaz-psi.vercel.app )
 
 ## Prerequisites
 
